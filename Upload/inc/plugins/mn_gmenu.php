@@ -58,17 +58,17 @@ function mn_gmenu_deactivate(){
 }
 
 $plugins->add_hook('admin_config_menu', 'mn_gmenu_menu');
-function mn_gmenu_menu($sub_menu){
+function mn_gmenu_menu(&$sub_menu){
 	$sub_menu[] = array('id' => 'mn_gmenu', 'title' => 'Global Menu', 'link' => 'index.php?module=config-mn_gmenu');
 }
 
 $plugins->add_hook('admin_config_action_handler', 'mn_gmenu_action');
-function mn_gmenu_action($actions){
+function mn_gmenu_action(&$actions){
 	$actions['mn_gmenu'] = array('active' => 'mn_gmenu', 'file' => 'mn_gmenu');
 }
 
 $plugins->add_hook('admin_config_permissions', 'mn_gmenu_permissions');
-function mn_gmenu_permissions($admin_permissions){
+function mn_gmenu_permissions(&$admin_permissions){
 	$admin_permissions['mn_gmenu'] = 'Can manage Global Menu?';
 }
 
