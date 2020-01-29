@@ -12,12 +12,16 @@ function mn_gmenu_info(){
 		'authorsite'    => 'http://mybbhacks.zingaburga.com',
 		'version'       => '1.0',
 		'guid'          => '',
-		'compatibility' => '16*'
+		'compatibility' => '18*'
 	);
 }
 
-function mn_gmenu_activate(){
-	mn_gmenu_deactivate();
+function mn_gmenu_is_installed(){
+	return $GLOBALS['db']->table_exists('mn_gmenu');
+}
+
+function mn_gmenu_uninstall(){
+	mn_gmenu_install();
 	$GLOBALS['db']->write_query('CREATE TABLE '.TABLE_PREFIX.'mn_gmenu (
 		mngmid int unsigned not null auto_increment,
 		mngmtitle varchar(20) not null default \'\',
@@ -47,7 +51,7 @@ function mn_gmenu_activate(){
 	change_admin_permission('config', 'mn_gmenu', 0);
 }
 
-function mn_gmenu_deactivate(){
+function mn_gmenu_install(){
 	if(is_object($GLOBALS['cache']->handler)){
 		$GLOBALS['cache']->handler->delete('mn_gmenu');
 	}
@@ -628,6 +632,8 @@ function mn_gmenu_run(){
 
 function mn_gmenu(){
 	$mn_gmenucache = $GLOBALS['cache']->read('mn_gmenu');
+
+	$mn_gmenu_menu = '';
 	if(!empty($mn_gmenucache)){
 		foreach($mn_gmenucache as $key => &$mngm){
 			$mn_gmenu_class = '';
@@ -649,8 +655,11 @@ function mn_gmenu(){
 				}
 			}
 		}
-		eval('$mn_gmenu = "'.$GLOBALS['templates']->get('mn_gmenu').'";');
-		$GLOBALS['header'] = str_replace('<!-- mn_gmenu -->', $mn_gmenu, $GLOBALS['header']);
+
+		if($mn_gmenu_menu)
+		{
+			eval('$mn_gmenu = "'.$GLOBALS['templates']->get('mn_gmenu').'";');
+			$GLOBALS['header'] = str_replace('<!-- mn_gmenu -->', $mn_gmenu, $GLOBALS['header']);
+		}
 	}
 }
-?>
