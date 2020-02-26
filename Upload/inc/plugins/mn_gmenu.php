@@ -20,8 +20,8 @@ function mn_gmenu_is_installed(){
 	return $GLOBALS['db']->table_exists('mn_gmenu');
 }
 
-function mn_gmenu_uninstall(){
-	mn_gmenu_install();
+function mn_gmenu_install(){
+	mn_gmenu_uninstall();
 	$GLOBALS['db']->write_query('CREATE TABLE '.TABLE_PREFIX.'mn_gmenu (
 		mngmid int unsigned not null auto_increment,
 		mngmtitle varchar(20) not null default \'\',
@@ -51,7 +51,7 @@ function mn_gmenu_uninstall(){
 	change_admin_permission('config', 'mn_gmenu', 0);
 }
 
-function mn_gmenu_install(){
+function mn_gmenu_uninstall(){
 	if(is_object($GLOBALS['cache']->handler)){
 		$GLOBALS['cache']->handler->delete('mn_gmenu');
 	}
