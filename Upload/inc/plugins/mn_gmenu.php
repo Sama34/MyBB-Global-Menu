@@ -27,7 +27,7 @@ function mn_gmenu_install(){
 		mngmtitle varchar(20) not null default \'\',
 		mngmfid int not null default 0,
 		mngmfids text not null default \'\',
-		mngmurl varchar(20) not null default \'\',
+		mngmurl varchar(200) not null default \'\',
 		mngmurls text not null default \'\',
 		mngmugid text not null default \'\',
 		mngmactive tinyint(1) not null default 0,
